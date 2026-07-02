@@ -44,7 +44,7 @@ export function Header({
               className="rounded-sm outline-none hover:text-slate-600 underline focus-visible:ring-2 gap-0.5 focus-visible:ring-slate-500"
             >
               <img
-                src="/bedrock.png"
+                src={`${import.meta.env.BASE_URL}bedrock.png`}
                 alt="Bedrock.engineer logo"
                 className="h-2.5 w-2.5 mr-0.5 inline-block"
               />
@@ -58,7 +58,7 @@ export function Header({
               className="rounded-sm outline-none hover:text-slate-600 underline focus-visible:ring-2 gap-0.5 focus-visible:ring-slate-500"
             >
               <img
-                src="/buildingsmart.png"
+                src={`${import.meta.env.BASE_URL}buildingsmart.png`}
                 alt="buildingSMART NL logo"
                 className="h-2.5 w-2.5 mr-0.5 inline-block"
               />

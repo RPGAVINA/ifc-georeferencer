@@ -7,7 +7,7 @@ import package_ from "./package.json" with { type: "json" };
 // https://vite.dev/config/
 export default defineConfig({
   // Served at the root of the geo.buildingsmart.nl custom domain.
-  base: "/",
+  base: "/ifc-georeferencer/",
   define: {
     __APP_VERSION__: JSON.stringify(package_.version),
   },
