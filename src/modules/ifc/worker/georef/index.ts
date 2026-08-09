@@ -67,6 +67,10 @@ export async function writeMapConversion(
   verticalDatum: string | null,
   parameters: HelmertParams,
   siteReference: SiteReferenceSync | null,
+  // Target CRS axis-unit factor, resolved on the main thread (the worker
+  // has no proj4). Consumed only by the IFC2X3 ePset writer; IFC4+ writers
+  // derive their unit from the file's IfcProjectedCRS.MapUnit instead.
+  crsMetresPerUnit: number,
 ): Promise<void> {
   const ifcAPI = await getApi();
   const schema = parseSchema(ifcAPI.GetModelSchema(modelID));
@@ -95,7 +99,7 @@ export async function writeMapConversion(
   // convert canonical-metres E/N/H to MapUnit at the boundary; see
   // `writeGeorefIfc4` for the formula.
   switch (target.entity) {
-    case "ePset_MapConversion": {
+    case "ePSet_MapConversion": {
       writeGeorefIfc2x3(
         ifcAPI,
         modelID,
@@ -103,6 +107,7 @@ export async function writeMapConversion(
         verticalDatum,
         parameters,
         ifcMetresPerUnit,
+        crsMetresPerUnit,
       );
       break;
     }
@@ -169,7 +174,7 @@ function formatWriteOutcome(
         : "";
       return `${head}, ${body}${suffix})`;
     }
-    case "ePset_MapConversion": {
+    case "ePSet_MapConversion": {
       return `${head}, scale=${parameters.xScale.toFixed(6)}, rot=${parameters.rotation.toFixed(4)} rad)`;
     }
   }
